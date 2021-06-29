@@ -35,7 +35,7 @@ class _ListingState extends State<Listing> {
                       width: 40,
                       height: 40,
                       child: Image.asset(
-                        "assets/corujaada.png",
+                        "assets/images/corujaada.png",
                         height: 30,
                         width: 30,
                       ),
@@ -112,8 +112,8 @@ _buildTask(BuildContext context) {
         borderRadius: BorderRadius.all(Radius.circular(10.0))),
     child: Align(
       alignment: Alignment.topRight,
-      child: IconButton(
-        onPressed: () {
+      child: InkWell(
+        onTap: () {
           showDialog(
             context: context,
             builder: (BuildContext context) {
@@ -128,11 +128,10 @@ _buildTask(BuildContext context) {
             },
           );
         },
-        padding: EdgeInsets.only(left: 50, bottom: 40),
-        icon: const Icon(
-          Icons.delete_outline_sharp,
-          size: 30,
-          color: Color(0xFF3101B9),
+        child: Image.asset(
+          "assets/Group.png",
+          height: 30,
+          width: 30,
         ),
       ),
     ),
