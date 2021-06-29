@@ -1,8 +1,15 @@
+import 'package:app_lovepeople/view/componentes/olho_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:dotted_line/dotted_line.dart';
 
-class Cadastro extends StatelessWidget {
+class Cadastro extends StatefulWidget {
+  @override
+  _CadastroState createState() => _CadastroState();
+}
+
+class _CadastroState extends State<Cadastro> {
   final _formKey = GlobalKey<FormState>();
+  bool _enableObscure = true;
 
   @override
   Widget build(BuildContext context) {
@@ -72,9 +79,9 @@ class Cadastro extends StatelessWidget {
                           Container(
                             height: 40,
                             child: TextFormField(
-                              obscureText: true,
+                              obscureText: _enableObscure,
                               decoration: InputDecoration(
-                                  suffixIcon: Icon(Icons.remove_red_eye),
+                                  suffixIcon: _buildSuffixPassword(),
                                   border: OutlineInputBorder(
                                     borderRadius:
                                         BorderRadius.all(Radius.circular(10)),
@@ -93,9 +100,9 @@ class Cadastro extends StatelessWidget {
                           Container(
                             height: 40,
                             child: TextFormField(
-                              obscureText: true,
+                              obscureText: _enableObscure,
                               decoration: InputDecoration(
-                                  suffixIcon: Icon(Icons.remove_red_eye),
+                                  suffixIcon: _buildSuffixPassword(),
                                   border: OutlineInputBorder(
                                     borderRadius:
                                         BorderRadius.all(Radius.circular(10)),
@@ -177,5 +184,15 @@ class Cadastro extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  _buildSuffixPassword() {
+    return IconButton(
+        icon: Icon(_enableObscure ? Olho.olho : Olho.olho),
+        onPressed: () {
+          setState(() {
+            _enableObscure = !_enableObscure;
+          });
+        });
   }
 }
