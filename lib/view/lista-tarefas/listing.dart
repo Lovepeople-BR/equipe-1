@@ -43,27 +43,32 @@ class _ListingState extends State<Listing> {
                   ),
                 ),
                 SizedBox(
-                  width: 60,
+                  width: 50,
                 ),
-                Text(
-                  'Suas listagens',
-                  style: TextStyle(
-                    fontFamily: "Montserrat-SemiBold",
-                    fontSize: 20,
-                    color: Colors.white,
+                Container(
+                  margin: EdgeInsets.only(top: 40),
+                  child: Text(
+                    'Sua listagem',
+                    style: TextStyle(
+                      fontWeight: FontWeight.w500,
+                      wordSpacing: 1,
+                      fontFamily: "Montserrat",
+                      fontSize: 25,
+                      color: Colors.white,
+                    ),
                   ),
                 ),
               ],
             ),
             SizedBox(
-              height: 30,
+              height: 10,
             ),
             _buildSearch(),
             Expanded(
               child: ListView(
                 children: [
                   SizedBox(
-                    height: 15,
+                    height: 25,
                   ),
                   _buildTask(context),
                   SizedBox(
@@ -86,7 +91,7 @@ class _ListingState extends State<Listing> {
       bottomNavigationBar: Container(
         alignment: Alignment.center,
         height: 80,
-        margin: EdgeInsets.only(bottom: 70),
+        margin: EdgeInsets.only(bottom: 75),
         child: IconButton(
           icon: const Icon(Icons.add_rounded),
           color: Colors.white,
@@ -129,7 +134,7 @@ _buildTask(BuildContext context) {
           );
         },
         child: Image.asset(
-          "assets/Group.png",
+          "assets/images/Group.png",
           height: 30,
           width: 30,
         ),
@@ -148,17 +153,18 @@ _buildSearch() {
         borderRadius: BorderRadius.all(Radius.circular(10.0))),
     child: TextFormField(
       decoration: InputDecoration(
-        labelText: 'Busque palavras-chave',
+        labelText: 'Busque por palavras-chave',
         border: OutlineInputBorder(
             borderSide: BorderSide(color: Colors.white, width: 0.0),
             borderRadius: BorderRadius.all(Radius.circular(10))),
         suffixIcon: Icon(
           Icons.search,
           color: Color(0xFF3101B9),
+          size: 30,
         ),
         labelStyle: TextStyle(
-            fontSize: 15,
-            fontWeight: FontWeight.w600,
+            fontSize: 16,
+            fontWeight: FontWeight.w500,
             color: Color(0xFF3101B9),
             fontFamily: "Tahoma"),
       ),
