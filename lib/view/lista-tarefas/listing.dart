@@ -1,3 +1,4 @@
+import 'package:app_lovepeople/view/nova-tarefa/tarefas.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'delete.dart';
@@ -97,7 +98,11 @@ class _ListingState extends State<Listing> {
           color: Colors.white,
           iconSize: 85,
           onPressed: () {
-            Navigator.pop(context, true);
+            Navigator.of(context).pop(
+              MaterialPageRoute(
+                builder: (context) => NovaTarefa(),
+              ),
+            );
           },
         ),
       ),
