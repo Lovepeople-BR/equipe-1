@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
             .purple, // or Colors.green or any color darker than white (this is line 66)
         accentColor: Colors.black,
       ),
-      home: Login(),
+      home: Cadastro(),
     );
   }
 }
