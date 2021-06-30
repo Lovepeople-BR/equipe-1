@@ -78,7 +78,7 @@ class _LoginState extends State<Login> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.all(15),
+                    padding: const EdgeInsets.all(10),
                     child: Container(
                       width: 300,
                       height: 40,
