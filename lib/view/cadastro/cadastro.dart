@@ -1,4 +1,5 @@
 import 'package:app_lovepeople/view/componentes/olho_icons.dart';
+import 'package:app_lovepeople/view/login/login.dart';
 import 'package:flutter/material.dart';
 import 'package:dotted_line/dotted_line.dart';
 
@@ -173,7 +174,9 @@ class _CadastroState extends State<Cadastro> {
                           "Entrar",
                           style: TextStyle(color: Colors.yellow),
                         ),
-                        onTap: () {},
+                        onTap: () {
+                          redirectToLogin(context);
+                        },
                       ),
                     ],
                   ),
@@ -194,5 +197,13 @@ class _CadastroState extends State<Cadastro> {
             _enableObscure = !_enableObscure;
           });
         });
+  }
+
+  void redirectToLogin(context) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => Login(),
+      ),
+    );
   }
 }
