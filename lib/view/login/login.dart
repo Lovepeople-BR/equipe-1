@@ -1,3 +1,4 @@
+import 'package:app_lovepeople/view/componentes/olho_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:dotted_line/dotted_line.dart';
 
@@ -187,9 +188,7 @@ class _LoginState extends State<Login> {
 
   _buildSuffixPasswordLogin() {
     return IconButton(
-        icon: Icon(_enableObscure
-            ? Icons.remove_red_eye
-            : Icons.remove_red_eye_outlined),
+        icon: Icon(_enableObscure ? Olho.olho : Olho.olho),
         onPressed: () {
           setState(() {
             _enableObscure = !_enableObscure;
