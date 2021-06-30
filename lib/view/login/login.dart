@@ -101,7 +101,7 @@ class _LoginState extends State<Login> {
                   Padding(
                     padding: const EdgeInsets.only(left: 30),
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
                           'Esqueceu seu login ou senha? ',
@@ -126,7 +126,8 @@ class _LoginState extends State<Login> {
                       height: 32,
                       child: ElevatedButton(
                         onPressed: () {
-                          redirectToList(context);},
+                          redirectToList(context);
+                        },
                         child: Text(
                           "Entrar",
                           style: TextStyle(
@@ -191,8 +192,6 @@ class _LoginState extends State<Login> {
     );
   }
 
- 
-
   _buildSuffixPasswordLogin() {
     return IconButton(
         icon: Icon(_enableObscure ? Olho.olho : Olho.olho),
@@ -202,20 +201,20 @@ class _LoginState extends State<Login> {
           });
         });
   }
-   void redirectToList(context) {
-    Navigator.of(context)
-        .push(
+
+  void redirectToList(context) {
+    Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) => Listing(),
       ),
     );
-}
- void redirectToCadastro(context) {
-    Navigator.of(context)
-        .push(
+  }
+
+  void redirectToCadastro(context) {
+    Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) => Cadastro(),
       ),
     );
-}
+  }
 }
