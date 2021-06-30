@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:dotted_line/dotted_line.dart';
 
@@ -14,7 +13,7 @@ class _LoginState extends State<Login> {
     return Scaffold(
       backgroundColor: Color(0xFFA901F7),
       body: SingleChildScrollView(
-              child: Column(
+        child: Column(
           children: [
             Container(
               height: 190,
@@ -185,6 +184,7 @@ class _LoginState extends State<Login> {
       ),
     );
   }
+
   _buildSuffixPasswordLogin() {
     return IconButton(
         icon: Icon(_enableObscure
@@ -197,4 +197,3 @@ class _LoginState extends State<Login> {
         });
   }
 }
-
