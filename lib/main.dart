@@ -2,7 +2,7 @@ import 'package:app_lovepeople/view/cadastro/cadastro.dart';
 import 'package:app_lovepeople/view/lista-tarefas/listing.dart';
 import 'package:app_lovepeople/view/login/login.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:app_lovepeople/view/nova-tarefa/tarefas.dart';
+import 'package:app_lovepeople/view/nova-tarefa/nova_tarefa.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
             .purple, // or Colors.green or any color darker than white (this is line 66)
         accentColor: Colors.black,
       ),
-      home: Cadastro(),
+      home: Login(),
     );
   }
 }
