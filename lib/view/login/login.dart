@@ -1,4 +1,6 @@
+import 'package:app_lovepeople/view/cadastro/cadastro.dart';
 import 'package:app_lovepeople/view/componentes/olho_icons.dart';
+import 'package:app_lovepeople/view/lista-tarefas/listing.dart';
 import 'package:flutter/material.dart';
 import 'package:dotted_line/dotted_line.dart';
 
@@ -123,7 +125,8 @@ class _LoginState extends State<Login> {
                     child: Container(
                       height: 32,
                       child: ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          redirectToList(context);},
                         child: Text(
                           "Entrar",
                           style: TextStyle(
@@ -175,7 +178,9 @@ class _LoginState extends State<Login> {
                       style: TextStyle(
                           fontFamily: 'Tahoma', color: Color(0xFFFFD600)),
                     ),
-                    onTap: () {},
+                    onTap: () {
+                      redirectToCadastro(context);
+                    },
                   )
                 ],
               ),
@@ -186,6 +191,8 @@ class _LoginState extends State<Login> {
     );
   }
 
+ 
+
   _buildSuffixPasswordLogin() {
     return IconButton(
         icon: Icon(_enableObscure ? Olho.olho : Olho.olho),
@@ -195,4 +202,20 @@ class _LoginState extends State<Login> {
           });
         });
   }
+   void redirectToList(context) {
+    Navigator.of(context)
+        .push(
+      MaterialPageRoute(
+        builder: (context) => Listing(),
+      ),
+    );
+}
+ void redirectToCadastro(context) {
+    Navigator.of(context)
+        .push(
+      MaterialPageRoute(
+        builder: (context) => Cadastro(),
+      ),
+    );
+}
 }
