@@ -95,7 +95,9 @@ class NovaTarefa extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             TextButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
               child: Image.asset(
                 'assets/botton_cancel.png',
                 width: 35,
@@ -103,7 +105,9 @@ class NovaTarefa extends StatelessWidget {
               ),
             ),
             TextButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
               child: Image.asset(
                 'assets/botton_confirm.png',
                 width: 50,
