@@ -26,5 +26,24 @@ class UserRepository {
     });
   }
 
-  login() {}
+  Future<LoginUser?> login(String email, String senha) {
+    final body = {'identifier': email, 'password': senha};
+
+    return http
+        .post(
+      Uri.parse('https://todo-lovepeople.herokuapp.com/auth/local'),
+      body: body,
+    )
+        .then((value) async {
+      if (value.statusCode == 200) {
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        prefs.setString('LoginUser', value.body);
+
+        final json = jsonDecode(value.body);
+        return LoginUser.fromJson(json);
+      } else {
+        return null;
+      }
+    });
+  }
 }
