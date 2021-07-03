@@ -18,10 +18,6 @@ class UserRepository {
         SharedPreferences prefs = await SharedPreferences.getInstance();
         prefs.setString('LoginUser', value.body);
 
-        //String? body = prefs.getString(
-        //  'LoginUser',
-        // );  transformar num json
-
         final json = jsonDecode(value.body);
         return LoginUser.fromJson(json);
       } else {
