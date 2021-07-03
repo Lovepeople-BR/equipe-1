@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 class NovaTarefa extends StatelessWidget {
   final _cores = ['FFF2CC', 'FFD9F0', 'E8C5FF', 'CAFBFF', 'E3FFE6'];
   final _formKey = GlobalKey<FormState>();
-  //const NovaTarefa({Key? key}) : super(key: key);
+  final _tituloTarefa = TextEditingController();
+  final _descricaoTarefa = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -30,36 +31,56 @@ class NovaTarefa extends StatelessWidget {
                       child: Column(
                         children: [
                           TextFormField(
-                              decoration: InputDecoration(
-                            hintStyle: TextStyle(
-                                fontSize: 17, color: Colors.indigo[900]),
-                            floatingLabelBehavior: FloatingLabelBehavior.never,
-                            border: OutlineInputBorder(
-                                borderSide: BorderSide.none,
-                                borderRadius: BorderRadius.circular(20)),
-                            hintText: ('Título da Tarefa'),
-                            filled: true,
-                            fillColor: Colors.white,
-                          )),
-                          Padding(padding: const EdgeInsets.only(top: 14)),
-                          TextFormField(
-                              maxLines: 10,
+                              onSaved: (value) {
+                                _tituloTarefa.text = value!;
+                              },
+                              controller: _tituloTarefa,
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return 'Campo obrigatório';
+                                }
+                              },
                               decoration: InputDecoration(
                                 hintStyle: TextStyle(
-                                    fontSize: 12, color: Colors.indigo[900]),
+                                    fontSize: 17, color: Colors.indigo[900]),
                                 floatingLabelBehavior:
                                     FloatingLabelBehavior.never,
                                 border: OutlineInputBorder(
                                     borderSide: BorderSide.none,
                                     borderRadius: BorderRadius.circular(20)),
-                                hintText:
-                                    ('Escreva uma descrição para sua tarefa'),
+                                hintText: ('Título da Tarefa'),
                                 filled: true,
                                 fillColor: Colors.white,
                               )),
+                          Padding(padding: const EdgeInsets.only(top: 14)),
+                          TextFormField(
+                            onSaved: (value) {
+                              _descricaoTarefa.text = value!;
+                            },
+                            controller: _descricaoTarefa,
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return 'Campo obrigatório';
+                              }
+                            },
+                            maxLines: 10,
+                            decoration: InputDecoration(
+                              hintStyle: TextStyle(
+                                  fontSize: 14, color: Colors.indigo[900]),
+                              floatingLabelBehavior:
+                                  FloatingLabelBehavior.never,
+                              border: OutlineInputBorder(
+                                  borderSide: BorderSide.none,
+                                  borderRadius: BorderRadius.circular(20)),
+                              hintText:
+                                  ('Escreva uma descrição para sua tarefa'),
+                              filled: true,
+                              fillColor: Colors.white,
+                            ),
+                          ),
                           Container(
                             child: buildListView(),
-                            margin: EdgeInsets.only(top: 40),
+                            margin: EdgeInsets.only(top: 25),
                             height: 40,
                           ),
                         ],
@@ -71,7 +92,7 @@ class NovaTarefa extends StatelessWidget {
             ),
             Container(
               alignment: Alignment.topLeft,
-              padding: const EdgeInsets.only(left: 13, top: 14),
+              padding: const EdgeInsets.only(left: 11, top: 14),
               child: Image.asset(
                 'assets/logo_lovepeople.png',
                 height: 50,
@@ -95,7 +116,9 @@ class NovaTarefa extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             TextButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
               child: Image.asset(
                 'assets/botton_cancel.png',
                 width: 35,
@@ -103,7 +126,11 @@ class NovaTarefa extends StatelessWidget {
               ),
             ),
             TextButton(
-              onPressed: () {},
+              onPressed: () {
+                if (_formKey.currentState?.validate() == true) {
+                  _formKey.currentState?.save();
+                }
+              },
               child: Image.asset(
                 'assets/botton_confirm.png',
                 width: 50,
@@ -124,7 +151,11 @@ class NovaTarefa extends StatelessWidget {
           final colorButton = '0xFF${_cores[index]}';
           return ElevatedButton(
             style: ElevatedButton.styleFrom(
-                shape: CircleBorder(), primary: Color(int.parse(colorButton))),
+              shape: CircleBorder(),
+              primary: Color(
+                int.parse(colorButton),
+              ),
+            ),
             onPressed: () {},
             child: SizedBox(
               width: 20,
