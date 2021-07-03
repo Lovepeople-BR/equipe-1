@@ -111,7 +111,7 @@ class NovaTarefa extends StatelessWidget {
         ),
       ),
       bottomNavigationBar: Padding(
-        padding: const EdgeInsets.all(30),
+        padding: const EdgeInsets.all(25),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
