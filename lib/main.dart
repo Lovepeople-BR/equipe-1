@@ -1,5 +1,6 @@
 import 'package:app_lovepeople/model/user_repository.dart';
 import 'package:app_lovepeople/presenter/cadastro_controller.dart';
+import 'package:app_lovepeople/presenter/login_controller.dart';
 import 'package:app_lovepeople/view/cadastro/cadastro.dart';
 import 'package:app_lovepeople/view/cadastro/cadastro_secundario.dart';
 import 'package:app_lovepeople/view/lista-tarefas/listing.dart';
@@ -21,7 +22,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        Provider(create: (context) => CadastroController(userRepository))
+        ChangeNotifierProvider(create: (context) => CadastroController(userRepository)),
+        ChangeNotifierProvider(create: (context) => LoginController(userRepository))
       ],
       child: MaterialApp(
         title: 'Flutter Demo',
