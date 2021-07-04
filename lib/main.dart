@@ -22,8 +22,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (context) => CadastroController(userRepository)),
-        ChangeNotifierProvider(create: (context) => LoginController(userRepository))
+        ChangeNotifierProvider(
+            create: (context) => CadastroController(userRepository)),
+        ChangeNotifierProvider(
+            create: (context) => LoginController(userRepository))
       ],
       child: MaterialApp(
         title: 'Flutter Demo',
@@ -35,7 +37,6 @@ class MyApp extends StatelessWidget {
         ),
         home: Login(),
       ),
-
     );
   }
 }
