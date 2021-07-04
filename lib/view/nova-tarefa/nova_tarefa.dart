@@ -1,3 +1,4 @@
+import 'package:app_lovepeople/model/nova_tarefa_model.dart';
 import 'package:flutter/material.dart';
 
 class NovaTarefa extends StatelessWidget {
@@ -5,6 +6,7 @@ class NovaTarefa extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
   final _tituloTarefa = TextEditingController();
   final _descricaoTarefa = TextEditingController();
+  var _selectedColor = '';
 
   @override
   Widget build(BuildContext context) {
@@ -129,6 +131,11 @@ class NovaTarefa extends StatelessWidget {
               onPressed: () {
                 if (_formKey.currentState?.validate() == true) {
                   _formKey.currentState?.save();
+                  NovaTarefaModel(
+                    title: _tituloTarefa.text,
+                    description: _descricaoTarefa.text,
+                    color: _selectedColor,
+                  );
                 }
               },
               child: Image.asset(
@@ -156,7 +163,9 @@ class NovaTarefa extends StatelessWidget {
                 int.parse(colorButton),
               ),
             ),
-            onPressed: () {},
+            onPressed: () {
+              _selectedColor = _cores[index];
+            },
             child: SizedBox(
               width: 20,
             ),
