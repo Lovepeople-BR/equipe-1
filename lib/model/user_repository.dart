@@ -1,10 +1,29 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'login_user.dart';
+import 'package:app_lovepeople/globals.dart' as globals;
 
 class UserRepository {
+  var header = {
+    HttpHeaders.authorizationHeader: 'Bearer ${globals.token}',
+  };
+
+  // Future<List<dynamic>> todo()async  {
+  //   var response = await http.get(Uri.parse('https://todo-lovepeople.herokuapp.com/todos'),headers: header);
+  //    if (response.statusCode == 200) {
+  //       var json = JsonDecoder().convert(response.body);
+
+  //       return json.map<dynamic>((item) {
+  //         return dynamic.fromJson(item);
+  //       }).toList();
+  //     } else {
+  //       return [];
+  //     }
+  // }
+
   Future<LoginUser?> cadastrar(String nome, String email, String senha) {
     final body = {'username': nome, 'email': email, 'password': senha};
 
@@ -12,6 +31,7 @@ class UserRepository {
         .post(
       Uri.parse('https://todo-lovepeople.herokuapp.com/auth/local/register'),
       body: body,
+      headers: header
     )
         .then((value) async {
       if (value.statusCode == 200) {
