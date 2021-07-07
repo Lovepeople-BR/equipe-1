@@ -1,35 +1,32 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:app_lovepeople/core/local_preferences.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
-import 'login_user.dart';
+
 import 'package:app_lovepeople/globals.dart' as globals;
 
+import '../login_user.dart';
+
 class UserRepository {
+
+  final String baseUrl;
+  final LocalPreferences _localPreferences;
   var header = {
     HttpHeaders.authorizationHeader: 'Bearer ${globals.token}',
   };
 
-  // Future<List<dynamic>> todo()async  {
-  //   var response = await http.get(Uri.parse('https://todo-lovepeople.herokuapp.com/todos'),headers: header);
-  //    if (response.statusCode == 200) {
-  //       var json = JsonDecoder().convert(response.body);
+  UserRepository(this.baseUrl, this._localPreferences);
 
-  //       return json.map<dynamic>((item) {
-  //         return dynamic.fromJson(item);
-  //       }).toList();
-  //     } else {
-  //       return [];
-  //     }
-  // }
+ 
 
-  Future<LoginUser?> cadastrar(String nome, String email, String senha) {
+  Future<LoginResponse?> cadastrar(String nome, String email, String senha) {
     final body = {'username': nome, 'email': email, 'password': senha};
 
     return http
         .post(
-      Uri.parse('https://todo-lovepeople.herokuapp.com/auth/local/register'),
+      Uri.parse('$baseUrl/auth/local/register'),
       body: body,
       headers: header
     )
@@ -43,19 +40,19 @@ class UserRepository {
         // );  transformar num json
 
         final json = jsonDecode(value.body);
-        return LoginUser.fromJson(json);
+        return LoginResponse.fromJson(json);
       } else {
         return null;
       }
     });
   }
 
-  Future<LoginUser?> login(String email, String senha) {
+  Future<LoginResponse?> login(String email, String senha) {
     final body = {'identifier': email, 'password': senha};
 
     return http
         .post(
-      Uri.parse('https://todo-lovepeople.herokuapp.com/auth/local'),
+      Uri.parse('$baseUrl/auth/local'),
       body: body,
     )
         .then((value) async {
@@ -64,10 +61,12 @@ class UserRepository {
         prefs.setString('LoginUser', value.body);
 
         final json = jsonDecode(value.body);
-        return LoginUser.fromJson(json);
+        return LoginResponse.fromJson(json);
       } else {
         return null;
       }
     });
   }
+
+ 
 }
