@@ -1,10 +1,10 @@
-class LoginUser {
+class LoginResponse {
   String? jwt;
   User? user;
 
-  LoginUser({this.jwt, this.user});
+  LoginResponse({this.jwt, this.user});
 
-  LoginUser.fromJson(Map<String, dynamic> json) {
+  LoginResponse.fromJson(Map<String, dynamic> json) {
     this.jwt = json["jwt"];
     this.user = json["user"] == null ? null : User.fromJson(json["user"]);
   }

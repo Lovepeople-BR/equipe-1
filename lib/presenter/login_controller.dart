@@ -1,4 +1,4 @@
-import 'package:app_lovepeople/model/user_repository.dart';
+import 'package:app_lovepeople/model/repository/user_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:app_lovepeople/globals.dart' as globals;
 

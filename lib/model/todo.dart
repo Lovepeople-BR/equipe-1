@@ -1,11 +1,11 @@
-class NovaTarefaModel {
+class Todo {
   String? title;
   String? description;
   String? color;
 
-  NovaTarefaModel({this.title, this.description, this.color});
+  Todo({this.title, this.description, this.color});
 
-  NovaTarefaModel.fromJson(Map<String, dynamic> json) {
+  Todo.fromJson(Map<String, dynamic> json) {
     title = json['title'];
     description = json['description'];
     color = json['color'];
