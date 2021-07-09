@@ -1,6 +1,5 @@
 import 'dart:io';
 import 'package:app_lovepeople/globals.dart' as globals;
-import 'package:app_lovepeople/model/repository/delete_repository.dart';
 import 'package:app_lovepeople/model/repository/todo_repository.dart';
 import 'package:app_lovepeople/model/repository/user_repository.dart';
 import 'package:app_lovepeople/presenter/cadastro_controller.dart';
@@ -43,6 +42,9 @@ class MyApp extends StatelessWidget {
               create: (context) => CadastroController(context.read())),
           ChangeNotifierProvider(
               create: (context) => LoginController(context.read())),
+          ChangeNotifierProvider(
+            create: (context) => HomeController(context.read(), context.read()),
+          ),
         ],
         child: MaterialApp(
           title: 'Flutter Demo',

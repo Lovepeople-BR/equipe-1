@@ -1,6 +1,4 @@
 import 'package:app_lovepeople/core/local_preferences.dart';
-import 'package:flutter/cupertino.dart';
-
 import '../todo.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
@@ -15,28 +13,36 @@ class TodoRepository {
     this._localPreferences,
   );
 
-  Future<List<Todo>> getTasks(String title, {BuildContext? context}) async {
-    var response = await http.get(Uri.parse('$baseUrl/todos'), headers: header);
-    if (response.statusCode == 200) {
-      var json = JsonDecoder().convert(response.body);
-
-      return json.map<dynamic>((item) {
-        return Todo.fromJson(item);
-      }).toList();
-    } else {
-      return [];
-    }
+  Future<List<Todo>> getTasks() async {
+    final login = await _localPreferences.getLogin();
+    Map<String, String> header = {
+      'Authorization': 'Bearer ${login?.jwt}',
+    };
+    return http
+        .get(Uri.parse('$baseUrl/todos'), headers: header)
+        .then((value) async {
+      if (value.statusCode == 200) {
+        List json = jsonDecode(value.body);
+        return json.map((e) => Todo.fromJson(e)).toList();
+      } else {
+        return [];
+      }
+    });
   }
 
-  Future<Todo?> deleteItem(int? id) async {
-    await http
+  Future<Todo?> delete(int? todoId) async {
+    final login = await _localPreferences.getLogin();
+    Map<String, String> header = {
+      'Authorization': 'Bearer ${login?.jwt}',
+    };
+    return http
         .delete(
-      Uri.parse('$baseUrl/todos/ /todos/{idTodo}'),
+      Uri.parse('$baseUrl/todos/$todoId'),
       headers: header,
     )
         .then((value) async {
       if (value.statusCode == 200) {
-        var json = JsonDecoder().convert(value.body);
+        final json = jsonDecode(value.body);
         return Todo.fromJson(json);
       } else {
         return null;

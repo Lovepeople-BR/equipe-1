@@ -9,6 +9,7 @@ class LoginController extends ChangeNotifier {
   void login(
       String email, String senha, VoidCallback sucesso, VoidCallback falha) {
     repository.login(email, senha).then((value) {
+      
       if (value != null) {
         globals.token = value.jwt!;
         sucesso();
