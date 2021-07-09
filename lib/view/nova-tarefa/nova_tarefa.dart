@@ -1,5 +1,6 @@
 import 'package:app_lovepeople/model/todo.dart';
 import 'package:app_lovepeople/presenter/new_todo_controller.dart';
+import 'package:app_lovepeople/view/lista-tarefas/listing.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -137,16 +138,15 @@ class _NovaTarefaState extends State<NovaTarefa> {
                 onPressed: () {
                   String titulo = _tituloTarefa.text;
                   String descricao = _descricaoTarefa.text;
-
+                  Navigator.of(context)
+                      .pop(MaterialPageRoute(builder: (context) => Listing()));
                   if (titulo.isNotEmpty && descricao.isNotEmpty) {
                     final todo = Todo(
                       title: titulo,
                       description: descricao,
                       color: _selectedColor,
                     );
-                    controller.registerTodo(todo, () {
-                      Navigator.of(context).pop(todo);
-                    }, () {});
+                    controller.registerTodo(todo, () {}, () {});
                   }
                 },
                 child: Image.asset(

@@ -158,14 +158,16 @@ class _LoginState extends State<Login> {
                                     onPressed: () {
                                       if (_formKey.currentState?.validate() ==
                                           true) {
-                                        controller.login(
-                                            _emailController.text, _senhaController.text,
-                                            () {
+                                        controller.login(_emailController.text,
+                                            _senhaController.text, () {
+                                          print('fallen');
                                           Navigator.of(context).pushReplacement(
                                               MaterialPageRoute(
                                                   builder: (context) =>
                                                       Listing()));
-                                        }, () {});
+                                        }, () {
+                                          print('ERRO');
+                                        });
                                       }
                                     },
                                     child: Text(

@@ -1,20 +1,16 @@
 import 'dart:io';
 import 'package:app_lovepeople/globals.dart' as globals;
-import 'package:app_lovepeople/model/repository/delete_repository.dart';
 import 'package:app_lovepeople/model/repository/todo_repository.dart';
 import 'package:app_lovepeople/model/repository/user_repository.dart';
 import 'package:app_lovepeople/presenter/cadastro_controller.dart';
 import 'package:app_lovepeople/presenter/home_controller.dart';
 import 'package:app_lovepeople/presenter/login_controller.dart';
 import 'package:app_lovepeople/presenter/new_todo_controller.dart';
-
 import 'package:app_lovepeople/view/login/login.dart';
 import 'package:flutter/cupertino.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
-
 import 'core/local_preferences.dart';
 
 var header = {
@@ -43,6 +39,9 @@ class MyApp extends StatelessWidget {
               create: (context) => CadastroController(context.read())),
           ChangeNotifierProvider(
               create: (context) => LoginController(context.read())),
+          ChangeNotifierProvider(
+            create: (context) => HomeController(context.read(), context.read()),
+          ),
         ],
         child: MaterialApp(
           title: 'Flutter Demo',
