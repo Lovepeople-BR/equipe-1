@@ -158,9 +158,8 @@ class _LoginState extends State<Login> {
                                     onPressed: () {
                                       if (_formKey.currentState?.validate() ==
                                           true) {
-                                        controller.login(
-                                            _emailController.text, _senhaController.text,
-                                            () {
+                                        controller.login(_emailController.text,
+                                            _senhaController.text, () {
                                           Navigator.of(context).pushReplacement(
                                               MaterialPageRoute(
                                                   builder: (context) =>
@@ -202,19 +201,16 @@ class _LoginState extends State<Login> {
       bottomNavigationBar: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Padding(
-            padding: const EdgeInsets.only(bottom: 30),
-            child: DottedLine(
-              direction: Axis.horizontal,
-              lineLength: double.infinity,
-              lineThickness: 1.0,
-              dashLength: 4.0,
-              dashColor: Colors.white,
-              dashRadius: 0.0,
-              dashGapLength: 4.0,
-              dashGapColor: Colors.transparent,
-              dashGapRadius: 0.0,
-            ),
+          DottedLine(
+            direction: Axis.horizontal,
+            lineLength: double.infinity,
+            lineThickness: 1.0,
+            dashLength: 4.0,
+            dashColor: Colors.white,
+            dashRadius: 0.0,
+            dashGapLength: 4.0,
+            dashGapColor: Colors.transparent,
+            dashGapRadius: 0.0,
           ),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 20),
@@ -222,7 +218,7 @@ class _LoginState extends State<Login> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(bottom: 25),
+                  padding: const EdgeInsets.only(bottom: 10),
                   child: Text(
                     'Não possui cadastro? ',
                     textAlign: TextAlign.start,
@@ -231,7 +227,7 @@ class _LoginState extends State<Login> {
                 ),
                 InkWell(
                   child: Padding(
-                    padding: const EdgeInsets.only(bottom: 25),
+                    padding: const EdgeInsets.only(bottom: 10),
                     child: Text(
                       'Clique aqui',
                       style: TextStyle(
