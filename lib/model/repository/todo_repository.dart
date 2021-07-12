@@ -1,25 +1,18 @@
-import 'package:app_lovepeople/core/local_preferences.dart';
+import 'package:app_lovepeople/globals.dart';
 import '../todo.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:app_lovepeople/main.dart';
 
 class TodoRepository {
-  final LocalPreferences _localPreferences;
   final String baseUrl;
 
   TodoRepository(
     this.baseUrl,
-    this._localPreferences,
   );
 
   Future<List<Todo>> getTasks() async {
-    final login = await _localPreferences.getLogin();
-    Map<String, String> header = {
-      'Authorization': 'Bearer ${login?.jwt}',
-    };
     return http
-        .get(Uri.parse('$baseUrl/todos'), headers: header)
+        .get(Uri.parse('$baseUrl/todos'), headers: Globals.headerWithToken)
         .then((value) async {
       if (value.statusCode == 200) {
         List json = jsonDecode(value.body);
@@ -30,15 +23,11 @@ class TodoRepository {
     });
   }
 
-  Future<Todo?> delete(int? todoId) async {
-    final login = await _localPreferences.getLogin();
-    Map<String, String> header = {
-      'Authorization': 'Bearer ${login?.jwt}',
-    };
+  Future<Todo?> delete(int todoId) async {
     return http
         .delete(
       Uri.parse('$baseUrl/todos/$todoId'),
-      headers: header,
+      headers: Globals.headerWithToken,
     )
         .then((value) async {
       if (value.statusCode == 200) {
@@ -51,12 +40,12 @@ class TodoRepository {
   }
 
   Future<Todo?> register(Todo todo) async {
-    final login = await _localPreferences.getLogin();
-    header = {
-      'Authorization': 'Bearer ${login?.jwt}',
-    };
     return http
-        .post(Uri.parse('$baseUrl/todos'), headers: header, body: todo.toJson())
+        .post(
+      Uri.parse('$baseUrl/todos'),
+      headers: Globals.headerWithToken,
+      body: todo.toJson(),
+    )
         .then((value) async {
       if (value.statusCode == 200) {
         final json = jsonDecode(value.body);

@@ -1,6 +1,6 @@
 import 'package:app_lovepeople/model/repository/user_repository.dart';
 import 'package:flutter/material.dart';
-import 'package:app_lovepeople/globals.dart' as globals;
+import 'package:app_lovepeople/globals.dart';
 
 class LoginController extends ChangeNotifier {
   final UserRepository repository;
@@ -10,7 +10,7 @@ class LoginController extends ChangeNotifier {
       String email, String senha, VoidCallback sucesso, VoidCallback falha) {
     repository.login(email, senha).then((value) {
       if (value != null) {
-        globals.token = value.jwt!;
+        Globals.token = value.jwt!;
         sucesso();
       } else {
         falha();

@@ -26,61 +26,70 @@ class _ListingState extends State<Listing> {
     return Scaffold(
       backgroundColor: Color(0xFFAA00FF),
       body: Consumer<HomeController>(builder: (_, controller, child) {
-        return SafeArea(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
+        return Stack(
+          children: [
+            SafeArea(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Container(
-                    padding: const EdgeInsets.only(left: 8, bottom: 10),
-                    width: 70,
-                    height: 70,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius:
-                          BorderRadius.only(bottomRight: Radius.circular(100)),
-                    ),
-                    child: Align(
-                      alignment: Alignment.centerLeft,
-                      child: Container(
-                        width: 40,
-                        height: 40,
-                        child: Image.asset(
-                          "assets/corujaada.png",
-                          height: 30,
-                          width: 30,
+                  Row(
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.only(left: 8, bottom: 10),
+                        width: 70,
+                        height: 70,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.only(
+                              bottomRight: Radius.circular(100)),
+                        ),
+                        child: Align(
+                          alignment: Alignment.centerLeft,
+                          child: Container(
+                            width: 40,
+                            height: 40,
+                            child: Image.asset(
+                              "assets/corujaada.png",
+                              height: 30,
+                              width: 30,
+                            ),
+                          ),
                         ),
                       ),
-                    ),
+                      SizedBox(
+                        width: 60,
+                      ),
+                      Text(
+                        'Suas listagens',
+                        style: TextStyle(
+                          fontFamily: "Montserrat-SemiBold",
+                          fontSize: 20,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ],
                   ),
                   SizedBox(
-                    width: 60,
+                    height: 10,
                   ),
-                  Text(
-                    'Suas listagens',
-                    style: TextStyle(
-                      fontFamily: "Montserrat-SemiBold",
-                      fontSize: 20,
-                      color: Colors.white,
+                  _buildSearch(controller),
+                  Expanded(
+                    child: ListView.builder(
+                      itemCount: controller.tarefaList.length,
+                      itemBuilder: (context, index) {
+                        final todo = controller.tarefaList[index];
+                        return _buildTask(controller, todo);
+                      },
                     ),
                   ),
                 ],
               ),
-              SizedBox(
-                height: 10,
+            ),
+            if (controller.loading)
+              Center(
+                child: CircularProgressIndicator(),
               ),
-              _buildSearch(controller),
-              Expanded(
-                child: ListView.builder(
-                    itemCount: controller.tarefaList.length,
-                    itemBuilder: (context, index) {
-                      final todo = controller.tarefaList[index];
-                      return _buildTask(controller, todo);
-                    }),
-              ),
-            ],
-          ),
+          ],
         );
       }),
       bottomNavigationBar: Consumer<HomeController>(
@@ -103,138 +112,165 @@ class _ListingState extends State<Listing> {
     );
   }
 
-  _buildTask(HomeController controller, Todo todo) async {
+  Widget _buildTask(HomeController controller, Todo todo) {
     return Container(
       height: 120,
       width: 420,
-      margin: EdgeInsets.only(left: 30, right: 30),
+      margin: EdgeInsets.only(
+        left: 30,
+        right: 30,
+        top: 20,
+      ),
       padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
-          color: _getColor(todo.color),
-          borderRadius: BorderRadius.all(Radius.circular(10.0))),
-      child: Align(
-        alignment: Alignment.topRight,
-        child: InkWell(
-          onTap: () {
-            showDialog(
-                context: context,
-                builder: (BuildContext context) {
-                  return AlertDialog(
-                    actionsPadding:
-                        EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-                    title: Text(
-                      "Atenção",
-                      style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w600,
-                          color: Color(0xFF3101B9),
-                          fontFamily: "Tahoma"),
+        color: _getColor(todo.color),
+        borderRadius: BorderRadius.all(
+          Radius.circular(10.0),
+        ),
+      ),
+      child: InkWell(
+        onTap: () {
+          _showDialogDelete(todo, controller);
+        },
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    todo.title ?? '',
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
                     ),
-                    content: Text(
-                      "Deseja excluir a tarefa: ${todo.title} ? ",
-                      style: TextStyle(
-                          fontSize: 15,
-                          fontWeight: FontWeight.w600,
-                          color: Color(0xFF3101B9),
-                          fontFamily: "Tahoma"),
-                    ),
-                    actions: [
-                      TextButton(
-                        child: Text(
-                          'Confirmar',
-                          style: TextStyle(
-                              fontSize: 15,
-                              fontWeight: FontWeight.w600,
-                              color: Color(0xFF3101B9),
-                              fontFamily: "Tahoma"),
-                        ),
-                        onPressed: () {
-                          controller.delete(todo);
-
-                          Navigator.of(context).pop();
-                        },
-                      ),
-                      TextButton(
-                        child: Text(
-                          'Cancelar',
-                          style: TextStyle(
-                              fontSize: 15,
-                              fontWeight: FontWeight.w600,
-                              color: Color(0xFFAA00FF),
-                              fontFamily: "Tahoma"),
-                        ),
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
-                      ),
-                    ],
-                    elevation: 24,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.0),
-                      side: BorderSide(color: Colors.white, width: 0.0),
-                    ),
-                  );
-                });
-          },
-          child: Image.asset(
-            "assets/Group.png",
-            height: 30,
-            width: 30,
-          ),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Text(todo.description ?? ''),
+                ],
+              ),
+            ),
+            Image.asset(
+              "assets/Group.png",
+              height: 30,
+              width: 30,
+            ),
+          ],
         ),
       ),
     );
   }
-}
 
-@override
-_buildSearch(HomeController controller) {
-  return Container(
-    height: 40,
-    margin: EdgeInsets.only(left: 30, right: 30),
-    decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.all(Radius.circular(10.0))),
-    child: TextField(
-      onChanged: (text) {
-        controller.filter(text);
+  void _showDialogDelete(Todo todo, HomeController controller) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          actionsPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+          title: Text(
+            "Atenção",
+            style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.w600,
+                color: Color(0xFF3101B9),
+                fontFamily: "Tahoma"),
+          ),
+          content: Text(
+            "Deseja excluir a tarefa: ${todo.title} ? ",
+            style: TextStyle(
+                fontSize: 15,
+                fontWeight: FontWeight.w600,
+                color: Color(0xFF3101B9),
+                fontFamily: "Tahoma"),
+          ),
+          actions: [
+            TextButton(
+              child: Text(
+                'Confirmar',
+                style: TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.w600,
+                    color: Color(0xFF3101B9),
+                    fontFamily: "Tahoma"),
+              ),
+              onPressed: () {
+                controller.delete(todo);
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child: Text(
+                'Cancelar',
+                style: TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.w600,
+                    color: Color(0xFFAA00FF),
+                    fontFamily: "Tahoma"),
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+          elevation: 24,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10.0),
+            side: BorderSide(color: Colors.white, width: 0.0),
+          ),
+        );
       },
-      decoration: InputDecoration(
-        labelText: 'Busque palavras-chave',
-        border: OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.white, width: 0.0),
-            borderRadius: BorderRadius.all(Radius.circular(10))),
-        suffixIcon: Icon(
-          Icons.search,
-          color: Color(0xFF3101B9),
-        ),
-        labelStyle: TextStyle(
-            fontSize: 15,
-            fontWeight: FontWeight.w600,
-            color: Color(0xFF3101B9),
-            fontFamily: "Tahoma"),
-      ),
-    ),
-  );
-}
-
-@override
-void _goRegisterTodo(BuildContext context, HomeController controller) async {
-  final result = await Navigator.of(context).push(
-    MaterialPageRoute(
-      builder: (context) => NovaTarefa(),
-    ),
-  );
-
-  if (result != null) {
-    controller.loadTasks();
+    );
   }
-}
 
-Color _getColor(String? color) {
-  try {
-    return Color(int.parse('0xFF${color?.replaceAll('#', '')}'));
-  } catch (e) {
-    return Colors.transparent;
+  _buildSearch(HomeController controller) {
+    return Container(
+      margin: EdgeInsets.only(left: 30, right: 30),
+      decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.all(Radius.circular(10.0))),
+      child: TextField(
+        onChanged: (text) {
+          controller.filter(text);
+        },
+        decoration: InputDecoration(
+          hintText: 'Busque palavras-chave',
+          border: OutlineInputBorder(
+              borderSide: BorderSide(color: Colors.white, width: 0.0),
+              borderRadius: BorderRadius.all(Radius.circular(10))),
+          suffixIcon: Icon(
+            Icons.search,
+            color: Color(0xFF3101B9),
+          ),
+          labelStyle: TextStyle(
+              fontSize: 15,
+              fontWeight: FontWeight.w600,
+              color: Color(0xFF3101B9),
+              fontFamily: "Tahoma"),
+        ),
+      ),
+    );
+  }
+
+  void _goRegisterTodo(BuildContext context, HomeController controller) async {
+    final result = await Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => NovaTarefa(),
+      ),
+    );
+
+    if (result != null) {
+      controller.loadTasks();
+    }
+  }
+
+  Color _getColor(String? color) {
+    try {
+      return Color(int.parse('0xFF${color?.replaceAll('#', '')}'));
+    } catch (e) {
+      return Colors.transparent;
+    }
   }
 }
