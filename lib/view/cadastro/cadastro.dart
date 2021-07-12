@@ -167,7 +167,7 @@ class _CadastroState extends State<Cadastro> {
                                         MaterialPageRoute(
                                             builder: (context) => Listing()));
                                   }, () {
-                                    // criar dialog
+                                    _showError();
                                   });
                                 }
                               },
@@ -184,6 +184,10 @@ class _CadastroState extends State<Cadastro> {
                                 ),
                               ),
                             ),
+                            if (controller.loading)
+                              Center(
+                                child: CircularProgressIndicator(),
+                              ),
                           ],
                         ),
                       )),
@@ -249,10 +253,24 @@ class _CadastroState extends State<Cadastro> {
     );
   }
 
-  _incrementCounter() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    int counter = (prefs.getInt('counter') ?? 0) + 1;
-    print('Pressed $counter times.');
-    await prefs.setInt('counter', counter);
+  void _showError() {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+          'Não possivel realizar cadastro',
+          style: TextStyle(
+            color: Colors.white,
+          ),
+        ),
+        backgroundColor: Colors.red,
+      ),
+    );
   }
+
+  // _incrementCounter() async {
+  //   SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   int counter = (prefs.getInt('counter') ?? 0) + 1;
+  //   print('Pressed $counter times.');
+  //   await prefs.setInt('counter', counter);
+  // }
 }
