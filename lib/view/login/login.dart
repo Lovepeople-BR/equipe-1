@@ -1,3 +1,4 @@
+import 'package:app_lovepeople/core/functions.dart';
 import 'package:app_lovepeople/presenter/login_controller.dart';
 import 'package:app_lovepeople/view/cadastro/cadastro.dart';
 import 'package:app_lovepeople/view/componentes/olho_icons.dart';
@@ -16,6 +17,14 @@ class _LoginState extends State<Login> {
   final _emailController = TextEditingController();
   final _senhaController = TextEditingController();
   bool _enableObscure = true;
+
+  @override
+  void initState() {
+    postFrame(() {
+      context.read<LoginController>().verifyLogin(redirectToList);
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -166,7 +175,7 @@ class _LoginState extends State<Login> {
                                                   builder: (context) =>
                                                       Listing()));
                                         }, () {
-                                          print('ERRO');
+                                          _showError();
                                         });
                                       }
                                     },
@@ -198,6 +207,10 @@ class _LoginState extends State<Login> {
                 ),
               ),
             ),
+            if (controller.loading)
+              Center(
+                child: CircularProgressIndicator(),
+              ),
           ],
         );
       }),
@@ -205,7 +218,7 @@ class _LoginState extends State<Login> {
         mainAxisSize: MainAxisSize.min,
         children: [
           Padding(
-            padding: const EdgeInsets.only(bottom: 30),
+            padding: const EdgeInsets.only(bottom: 10),
             child: DottedLine(
               direction: Axis.horizontal,
               lineLength: double.infinity,
@@ -224,7 +237,7 @@ class _LoginState extends State<Login> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(bottom: 25),
+                  padding: const EdgeInsets.only(bottom: 10),
                   child: Text(
                     'Não possui cadastro? ',
                     textAlign: TextAlign.start,
@@ -233,7 +246,7 @@ class _LoginState extends State<Login> {
                 ),
                 InkWell(
                   child: Padding(
-                    padding: const EdgeInsets.only(bottom: 25),
+                    padding: const EdgeInsets.only(bottom: 10),
                     child: Text(
                       'Clique aqui',
                       style: TextStyle(
@@ -243,10 +256,10 @@ class _LoginState extends State<Login> {
                   onTap: () {
                     redirectToCadastro(context);
                   },
-                )
+                ),
               ],
             ),
-          )
+          ),
         ],
       ),
     );
@@ -262,7 +275,7 @@ class _LoginState extends State<Login> {
         });
   }
 
-  void redirectToList(context) {
+  void redirectToList() {
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) => Listing(),
@@ -274,6 +287,20 @@ class _LoginState extends State<Login> {
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) => Cadastro(),
+      ),
+    );
+  }
+
+  void _showError() {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+          'Email ou senha invalidos',
+          style: TextStyle(
+            color: Colors.white,
+          ),
+        ),
+        backgroundColor: Colors.red,
       ),
     );
   }

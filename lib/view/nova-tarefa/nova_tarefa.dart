@@ -147,7 +147,7 @@ class _NovaTarefaState extends State<NovaTarefa> {
                     controller.registerTodo(todo, () {
                       Navigator.of(context).pop(todo);
                     }, () {
-                      print('ocorreu alguma falha ao cadastrar');
+                      _showError();
                     });
                   }
                 },
@@ -162,6 +162,20 @@ class _NovaTarefaState extends State<NovaTarefa> {
         ),
       );
     });
+  }
+
+  void _showError() {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+          'Não foi possivel cadastrar TODO',
+          style: TextStyle(
+            color: Colors.white,
+          ),
+        ),
+        backgroundColor: Colors.red,
+      ),
+    );
   }
 
   ListView buildListView() {

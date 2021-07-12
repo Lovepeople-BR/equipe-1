@@ -12,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'core/local_preferences.dart';
+
 void main() {
   runApp(MyApp());
 }
@@ -24,8 +25,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        Provider.value(value: TodoRepository(URL_BASE_API)),
-        Provider.value(value: UserRepository(URL_BASE_API)),
+        Provider.value(
+            value: TodoRepository(
+          URL_BASE_API,
+        )),
+        Provider.value(value: UserRepository(URL_BASE_API, preferences)),
       ],
       child: MultiProvider(
         providers: [
@@ -36,7 +40,9 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider(
               create: (context) => LoginController(context.read())),
           ChangeNotifierProvider(
-            create: (context) => HomeController(context.read(),),
+            create: (context) => HomeController(
+              context.read(),
+            ),
           ),
         ],
         child: MaterialApp(
