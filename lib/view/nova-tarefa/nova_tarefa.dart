@@ -138,15 +138,17 @@ class _NovaTarefaState extends State<NovaTarefa> {
                 onPressed: () {
                   String titulo = _tituloTarefa.text;
                   String descricao = _descricaoTarefa.text;
-                  Navigator.of(context)
-                      .pop(MaterialPageRoute(builder: (context) => Listing()));
                   if (titulo.isNotEmpty && descricao.isNotEmpty) {
                     final todo = Todo(
                       title: titulo,
                       description: descricao,
                       color: _selectedColor,
                     );
-                    controller.registerTodo(todo, () {}, () {});
+                    controller.registerTodo(todo, () {
+                      Navigator.of(context).pop(todo);
+                    }, () {
+                      print('ocorreu alguma falha ao cadastrar');
+                    });
                   }
                 },
                 child: Image.asset(
@@ -164,24 +166,28 @@ class _NovaTarefaState extends State<NovaTarefa> {
 
   ListView buildListView() {
     return ListView.builder(
-        scrollDirection: Axis.horizontal,
-        itemCount: _cores.length,
-        itemBuilder: (context, index) {
-          final colorButton = '0xFF${_cores[index]}';
-          return ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              shape: CircleBorder(),
-              primary: Color(
-                int.parse(colorButton),
-              ),
+      scrollDirection: Axis.horizontal,
+      itemCount: _cores.length,
+      itemBuilder: (context, index) {
+        final colorButton = '0xFF${_cores[index]}';
+        return ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            shape: CircleBorder(),
+            primary: Color(
+              int.parse(colorButton),
             ),
-            onPressed: () {
+            elevation: _selectedColor == _cores[index] ? 10 : 0,
+          ),
+          onPressed: () {
+            setState(() {
               _selectedColor = _cores[index];
-            },
-            child: SizedBox(
-              width: 20,
-            ),
-          );
-        });
+            });
+          },
+          child: SizedBox(
+            width: 20,
+          ),
+        );
+      },
+    );
   }
 }

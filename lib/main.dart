@@ -1,5 +1,5 @@
 import 'dart:io';
-import 'package:app_lovepeople/globals.dart' as globals;
+import 'package:app_lovepeople/globals.dart';
 import 'package:app_lovepeople/model/repository/todo_repository.dart';
 import 'package:app_lovepeople/model/repository/user_repository.dart';
 import 'package:app_lovepeople/presenter/cadastro_controller.dart';
@@ -12,10 +12,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'core/local_preferences.dart';
-
-var header = {
-  HttpHeaders.authorizationHeader: 'Bearer ${globals.token}',
-};
 void main() {
   runApp(MyApp());
 }
@@ -28,8 +24,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        Provider.value(value: TodoRepository(URL_BASE_API, preferences)),
-        Provider.value(value: UserRepository(URL_BASE_API, preferences)),
+        Provider.value(value: TodoRepository(URL_BASE_API)),
+        Provider.value(value: UserRepository(URL_BASE_API)),
       ],
       child: MultiProvider(
         providers: [
