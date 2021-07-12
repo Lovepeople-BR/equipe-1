@@ -36,7 +36,7 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider(
               create: (context) => LoginController(context.read())),
           ChangeNotifierProvider(
-            create: (context) => HomeController(context.read(), context.read()),
+            create: (context) => HomeController(context.read(),),
           ),
         ],
         child: MaterialApp(
