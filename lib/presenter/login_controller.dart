@@ -24,17 +24,6 @@ class LoginController extends ChangeNotifier {
     });
   }
 
-  void verifyLogin(VoidCallback authenticated) {
-    _showLoading(true);
-    repository.getLogin().then((value) {
-      if (value != null) {
-        authenticated();
-      }
-    }).whenComplete(() {
-      _showLoading(false);
-    });
-  }
-
   void _showLoading(bool show) {
     postFrame(() {
       loading = show;
