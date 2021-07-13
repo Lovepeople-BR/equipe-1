@@ -19,14 +19,6 @@ class _LoginState extends State<Login> {
   bool _enableObscure = true;
 
   @override
-  void initState() {
-    postFrame(() {
-      context.read<LoginController>().verifyLogin(redirectToList);
-    });
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xFFA901F7),

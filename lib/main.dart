@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
             value: TodoRepository(
           URL_BASE_API,
         )),
-        Provider.value(value: UserRepository(URL_BASE_API, preferences)),
+        Provider.value(value: UserRepository(URL_BASE_API)),
       ],
       child: MultiProvider(
         providers: [

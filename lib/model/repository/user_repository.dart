@@ -7,13 +7,12 @@ import '../login_user.dart';
 
 class UserRepository {
   final String baseUrl;
-  final LocalPreferences _localPreferences;
 
   var header = {
     HttpHeaders.authorizationHeader: 'Bearer ${Globals.token}',
   };
 
-  UserRepository(this.baseUrl, this._localPreferences);
+  UserRepository(this.baseUrl);
 
   Future<LoginResponse?> cadastrar(String nome, String email, String senha) {
     final body = {'username': nome, 'email': email, 'password': senha};
@@ -24,7 +23,8 @@ class UserRepository {
       if (value.statusCode == 200) {
         final json = jsonDecode(value.body);
         final login = LoginResponse.fromJson(json);
-        _localPreferences.saveLogin(login);
+
+        Globals.token = login.jwt ?? '';
 
         return login;
       } else {
@@ -52,13 +52,5 @@ class UserRepository {
         return null;
       }
     });
-  }
-
-  Future<LoginResponse?> getLogin() {
-    return _localPreferences.getLogin();
-  }
-
-  Future<void> logout() {
-    return _localPreferences.deleteLogin();
   }
 }
