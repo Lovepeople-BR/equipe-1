@@ -31,8 +31,8 @@ class _LoginState extends State<Login> {
               decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(190),
-                      bottomRight: Radius.circular(190))),
+                      bottomLeft: Radius.circular(200),
+                      bottomRight: Radius.circular(200))),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
